@@ -56,7 +56,7 @@ ctrl+w
 
 # markdown语法
 
-```javascript
+```java
 # 一级标题
 ## 二级标题
 ### 三级标题
