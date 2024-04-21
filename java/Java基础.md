@@ -580,23 +580,13 @@ Map synchronizedMap(map);
 
 # SpringCloud
 
+![](.\img\image-20240416032938611.png)
+
 ## SpringCloud有哪些组件
 
-![image-20240415222355899](https://github.com/PPPPPPING/Typora-workspaces@master/img/image-20240415222355899.png)
 
-![image-20240415222420966](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415222420966.png)
-![image-20240416032938611](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416032938611.png)
-![image-20240416033030499](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416033030499.png)
-![image-20240416033130198](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416033130198.png)
-
-![image-20240415222518602](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415222518602.png)
-
-![image-20240415222559369](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415222559369.png)
-![image-20240416030427375](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416030427375.png)
-![image-20240416030647034](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416030647034.png)
-![image-20240416030841930](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416030841930.png)
 注册nacos
-![image-20240416031207214](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416031207214.png)
+![image-20240416031207214](../../../../Library/Application%20Support/typora-user-images/image-20240416031207214.png)
 ![image-20240416031326681](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416031326681.png)
 ![image-20240416032313327](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416032313327.png)
 ![image-20240416032406682](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416032406682.png)
