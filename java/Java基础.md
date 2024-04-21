@@ -582,7 +582,7 @@ Map synchronizedMap(map);
 
 ## SpringCloud有哪些组件
 
-![image-20240415222355899](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415222355899.png)
+![image-20240415222355899](https://github.com/PPPPPPING/Typora-workspaces@master/img/image-20240415222355899.png)
 
 ![image-20240415222420966](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415222420966.png)
 ![image-20240416032938611](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416032938611.png)
