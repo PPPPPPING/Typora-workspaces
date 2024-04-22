@@ -1,3 +1,29 @@
+# 存储引擎对比
+
+# 底层时如何组织存储的 
+
+# 索引 
+
+# buffer 
+
+# Pool 
+
+# bin log 
+
+# redo log 
+
+# undo log 
+
+# 事务隔离级别
+
+  
+
+# mvcc 
+
+# 锁 
+
+# explian
+
 # 索引
 
 索引是对数据库表中一列或多列的值进行排序的一种结构。MySQL索引的建立对于MySQL的高效运行是很重要的，索引可以大大提高MySQL的检索速度。
@@ -117,5 +143,3 @@ FROM
 	teacher
 JOIN course ON course.Tid = teacher.Tid
 ```
-
-# 
