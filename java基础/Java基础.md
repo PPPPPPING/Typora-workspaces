@@ -4,8 +4,8 @@
 - [基本数据类型和包装类的区别](#基本数据类型和包装类的区别)
 - [冒泡排序](#冒泡排序)
 - [重载与重写的区别](#重载与重写的区别)
-- [equals与==的区别](#equals与==的区别 )
-- [String、StringBuffer和StringBuilder的异同？](#String、StringBuffer和StringBuilder的异同？ )
+- [equals与==的区别](#equals与==的区别)
+- [String、StringBuffer和StringBuilder的异同？](#String、StringBuffer和StringBuilder的异同?)
 - [计算机知识](#计算机知识)
 
 # String
@@ -162,13 +162,13 @@ public class BubbleSort {
 
 ●重载就是方法名相同，但是形参不同
 
-# equals与==的区别 
+# equals与==的区别
 
 ==比较的地址值
 
 equals比较的是内容
 
-# String、StringBuffer和StringBuilder的异同？ 
+# String、StringBuffer和StringBuilder的异同?
 
 相同点：底层都是通过char数组实现的 不同点：
 
