@@ -1,3 +1,5 @@
+[toc]
+
 # RocketMQ底层工作原理
 
 1. 启动NameServer，NameServer启动后开始监听端口，等待Broker、Producer、Consumer连接。 
