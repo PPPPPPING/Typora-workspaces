@@ -1,11 +1,11 @@
 [TOC]
 ## 目录
-- [String](#冒泡排序)
+- [String](#String)
 - [基本数据类型和包装类的区别](#基本数据类型和包装类的区别)
 - [冒泡排序](#冒泡排序)
 - [重载与重写的区别](#重载与重写的区别)
-- [equals与==的区别](#冒泡排序)
-- [String、StringBuffer和StringBuilder的异同？](#冒泡排序)
+- [equals与==的区别](#equals与==的区别 )
+- [String、StringBuffer和StringBuilder的异同？](#String、StringBuffer和StringBuilder的异同？ )
 - [计算机知识](#计算机知识)
 
 # String
