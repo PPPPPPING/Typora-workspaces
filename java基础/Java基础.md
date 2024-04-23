@@ -1,13 +1,4 @@
 [TOC]
-## 目录
-- [String](#String)
-- [基本数据类型和包装类的区别](#基本数据类型和包装类的区别)
-- [冒泡排序](#冒泡排序)
-- [重载与重写的区别](#重载与重写的区别)
-- [equals与==的区别](#equals与的区别)
-- [String、StringBuffer和StringBuilder的异同?](#StringStringBuffer和StringBuilder的异同)
-- [计算机知识](#计算机知识)
-
 # String
 
 ```java
@@ -178,8 +169,3 @@ equals比较的是内容
 
 ●如果我们在实际开发过程中需要对字符串进行频繁的修改，不要使用String，否则会造成内存空间的浪费；当需要考虑线程安全的场景下使用 StringBuffer，如果不需要考虑线程安全，追求效率的场景下可以使用 StringBuilder。
 
-# 计算机知识
-
-一个位(bit)为计算机最小单位,010110中的0,一个字节由8个bit
-
-![image-20240422111234994](img/image-20240422111234994.png)

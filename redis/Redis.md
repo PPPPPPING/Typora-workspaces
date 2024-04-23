@@ -1,3 +1,5 @@
+[toc]
+
 # Redis五种数据结构
 
 ![image-20240422112509624](img/image-20240422112509624.png)
@@ -100,33 +102,33 @@ b解决方案：
 
 redis-server /opt/homebrew/etc/redis.conf 启动
 
-![image-20240324194048013](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324194048013.png)
+![image-20240423163419931](img/image-20240423163419931.png)
 
 不要限制ip
 
-![image-20240324194213984](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324194213984.png)
+![image-20240423163431248](img/image-20240423163431248.png)
 
 远程保护关闭，表示谁都可以远程登录
 
-![image-20240324194614959](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324194614959.png)
+![image-20240423163514207](img/image-20240423163514207.png)
 
 AOF默认关闭，现在需要打开
 
-![image-20240324194753655](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324194753655.png)
+![image-20240423163529866](img/image-20240423163529866.png)
 
 always 每时每刻
 everysec 每秒
 不同步
 
-![image-20240324194849792](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324194849792.png)
+![image-20240423163546836](img/image-20240423163546836.png)
 
 RDB和AOF混合模式
 
-![image-20240324195609689](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324195609689.png)
+![image-20240423163609969](img/image-20240423163609969.png)
 
 多长时间内做了多少笔操作就会进行拍照
 
-![image-20240324201018297](/Users/chenxi/Library/Application Support/typora-user-images/image-20240324201018297.png)
+![image-20240423163617088](img/image-20240423163617088.png)
 
 多久多大进行一次rewrite
 
@@ -188,84 +190,76 @@ RDB和AOF混合模式
 
 # Redis基本使用
 
-![image-20240402184349952](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402184349952.png)
-![image-20240402184413286](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402184413286.png)
-![image-20240402184903165](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402184903165.png)
-![image-20240402184928081](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402184928081.png)
-![image-20240402185139530](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402185139530.png)
-![image-20240402185151528](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402185151528.png)
+![image-20240402214930991](img/image-20240402214930991.png)
 
-![image-20240402214930991](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402214930991.png)
+![image-20240402220208453](img/image-20240402220208453.png)
 
-![image-20240402220208453](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402220208453.png)
+![image-20240402220238034](img/image-20240402220238034.png)
 
-![image-20240402220238034](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402220238034.png)
+![image-20240402223526409](img/image-20240402223526409.png)
 
-![image-20240402223526409](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402223526409.png)
+![image-20240402224807651](img/image-20240402224807651.png)
 
-![image-20240402224807651](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402224807651.png)
+![image-20240402224825730](img/image-20240402224825730.png)
 
-![image-20240402224825730](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402224825730.png)
+![image-20240402224856788](img/image-20240402224856788.png)
 
-![image-20240402224856788](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402224856788.png)
+![image-20240402224938529](img/image-20240402224938529.png)
 
-![image-20240402224938529](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402224938529.png)
+![image-20240402224959215](img/image-20240402224959215.png)
 
-![image-20240402224959215](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402224959215.png)
+![image-20240402225056826](img/image-20240402225056826.png)
 
-![image-20240402225056826](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402225056826.png)
-
-![image-20240402225209302](/Users/chenxi/Library/Application Support/typora-user-images/image-20240402225209302.png)
+![image-20240402225209302](img/image-20240402225209302.png)
 
 ## Redis与数据库一致性
 
 canal  监听binlog
 
-![image-20240408153604047](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408153604047.png)
+![image-20240408153604047](img/image-20240408153604047.png)
 先删除缓存, 下次查缓存没有就去查数据库, 数据库查出来再同步到redis
 
-![image-20240408154300759](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408154300759.png)
+![image-20240408154300759](img/image-20240408154300759.png)
 线程1执行更新操作, 删除redis缓存, 但是网络延迟了, 数据库还没更新, 是老的数据
 线程2查redis, 由于已经删除了, 去查数据库, 是没更新的数据, 是老的, 所以数据库数据同步到redis了, 导致后面查到的都是老数据库
 
 解决, 双删策略, 数据库更新时再删一次redis, 第二次删除要延迟删除
 
-![image-20240408155847655](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408155847655.png)
+![image-20240408155847655](img/image-20240408155847655.png)
 先操作数据库, 线程1将数据库更新, 然后再删除缓存
 线程2去redis查, 发现没有, 就会去数据库查, 查到就会同步到redis, 但是删除缓存可能出现问题, 删除失败问题
 
-![image-20240408160106996](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408160106996.png)
+![image-20240408160106996](img/image-20240408160106996.png)
 代码耦合度过高, 要进行解耦
-![image-20240408160242706](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408160242706.png)
-![image-20240408160627945](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408160627945.png)
+![image-20240408160242706](img/image-20240408160242706.png)
+![image-20240408160627945](img/image-20240408160627945.png)
 线程1删除缓存, 然后更新数据库, 但是网络延迟了, 数据库没更新, 线程2读取的时候, redis被删除了, 去数据库查, 只能查到老数据, 然后同步redis
 数据库更新之后, 订阅binlog日志, 到cannel客户端, cannel客户端就会延迟删除redis, 删除失败就会异步发送需要删除的key到mq进行删除,发送成功到cannel客户端, 客户端再进行延迟删除
 
-![image-20240408161229017](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408161229017.png)
+![image-20240408161229017](img/image-20240408161229017.png)
 线操作缓存还是数据库? 推荐先操作数据库
 
 在什么场景 解决了什么问题 打到了什么效果
-![image-20240408162620401](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408162620401.png)
+![image-20240408162620401](img/image-20240408162620401.png)
 
-
-![image-20240408162934969](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408162934969.png)
-![image-20240408163012843](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163012843.png)
-![image-20240408163028456](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163028456.png)
+![image-20240408162934969](img/image-20240408162934969.png)
+![image-20240408163012843](img/image-20240408163012843.png)
+![image-20240408163028456](img/image-20240408163028456.png)
 ![](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163217791.png)
 
-![image-20240408163059345](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163059345.png)
+![image-20240408163059345](img/image-20240408163059345.png)
 
-![image-20240408163354004](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163354004.png)
+![image-20240408163354004](img/image-20240408163354004.png)
 
-![image-20240408163429141](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408163429141.png)
+![image-20240408163429141](img/image-20240408163429141.png)
 
-![image-20240408164609629](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408164609629.png)
+![image-20240408164609629](img/image-20240408164609629.png)
 
-![image-20240408165119894](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408165119894.png)
+![image-20240408165119894](img/image-20240408165119894.png)
 
-![image-20240408165158566](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408165158566.png)
+![image-20240408165158566](img/image-20240408165158566.png)
 
-![image-20240408165219363](/Users/chenxi/Library/Application Support/typora-user-images/image-20240408165219363.png)
+![image-20240408165219363](img/image-20240408165219363.png)
 
 批量发送到方式,效率高
 
@@ -295,7 +289,7 @@ Redis 中 集合是通过哈希表实现的，所以添加，删除，查找的�
 集合中最大的成员数为 232 - 1 (4294967295, 每个集合可存储40多亿个成员)。
 ```
 
-![image-20240417074601054](/Users/chenxi/Library/Application Support/typora-user-images/image-20240417074601054.png)
+![image-20240417074601054](img/image-20240417074601054.png)
 
 可以用用来抽奖
 
@@ -321,67 +315,65 @@ ps -ef | grep redis   查看进程
 
 # Redis/Zookeeper/MySQL实现分布式锁
 
-![image-20240410002842793](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410002842793.png)
+![image-20240410002842793](img/image-20240410002842793.png)
 
 redis乐观锁
-![image-20240415231140997](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415231140997.png)
-![image-20240410014559480](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410014559480.png)
+![image-20240415231140997](img/image-20240415231140997.png)
+![image-20240410014559480](img/image-20240410014559480.png)
 
-new SessionCallback	![image-20240410014747916](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410014747916.png)
+new SessionCallback	![image-20240410014747916](img/image-20240410014747916.png)
 执行失败进行重试
 
-## redis分布式锁
+## redis分布式锁(独占排他锁)
 
-![image-20240415232859231](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415232859231.png)
+![image-20240415232859231](img/image-20240415232859231.png)
 
-#### 独占排他锁
-
-![image-20240415233546457](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415233546457.png)
-![image-20240415233256997](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415233256997.png)
+![image-20240415233546457](img/image-20240415233546457.png)
+![image-20240415233256997](img/image-20240415233256997.png)
 
 
 
 setnx,设置了值,别的就不能设置了,所以设置了值就相当于获取锁了
 
-![image-20240410015628788](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410015628788.png)
+![image-20240410015628788](img/image-20240410015628788.png)
 
-![image-20240410020917148](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410020917148.png)
+![image-20240410020917148](img/image-20240410020917148.png)
 
-![image-20240410020952683](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410020952683.png)
-![image-20240415234709032](/Users/chenxi/Library/Application Support/typora-user-images/image-20240415234709032.png)
+![image-20240410020952683](img/image-20240410020952683.png)
+![image-20240415234709032](img/image-20240415234709032.png)
 1.2.3.4集群,1服务器宕机了, 就会出现死锁,所以要添加过期时间
 
-![image-20240410021551270](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410021551270.png)
+![image-20240410021551270](img/image-20240410021551270.png)
 不行, 如果还没来得及执行就宕机了
 
 防止误删,先判断是否是自己的锁,再进行删除,但是判断和删除不是原子性的,可能刚刚判断完就到期了,导致误删
 
-![image-20240410022740403](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410022740403.png)
+![image-20240410022740403](img/image-20240410022740403.png)
 
-![image-20240416000047726](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416000047726.png)
+![image-20240416000047726](img/image-20240416000047726.png)
 
-![image-20240410154642195](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410154642195.png)
+![image-20240410154642195](img/image-20240410154642195.png)
 
-![image-20240410154727211](/Users/chenxi/Library/Application Support/typora-user-images/image-20240410154727211.png)
+![image-20240410154727211](img/image-20240410154727211.png)
 
-![image-20240416000609402](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416000609402.png)
+![image-20240416000609402](img/image-20240416000609402.png)
 
-![image-20240416000728768](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416000728768.png)
+![image-20240416000728768](img/image-20240416000728768.png)
 使用lua脚本设置防误删的原子性问题
 
 ## redisson分布式锁
 
-![image-20240416002204421](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416002204421.png)
+![image-20240416002204421](img/image-20240416002204421.png)
 
-![image-20240416002318153](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416002318153.png)
+![image-20240416002318153](img/image-20240416002318153.png)
 
-![image-20240416002451951](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416002451951.png)
+![image-20240416002451951](img/image-20240416002451951.png)
 
-![image-20240416002618784](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416002618784.png)
+![image-20240416002618784](img/image-20240416002618784.png)
 
 ## zookeeper分布式锁
 
-![image-20240416002859987](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416002859987.png)
+![image-20240416002859987](img/image-20240416002859987.png)
 
 ## 可重入锁reentrantLock
 
@@ -423,7 +415,7 @@ qps 多少是在哪儿看的
 
 假如有一个值, 10传入, 会有三个hash函数进行运算,分别会有一个值比如1 3 5 , 会把数组指针为1 3 5的值改为1
 很难进行删除操作
-误判:是指数据不存在布隆过滤器中,但是经过计算之后,发现是存在于布隆过滤器当中的![image-20240416040220638](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416040220638.png)
+误判:是指数据不存在布隆过滤器中,但是经过计算之后,发现是存在于布隆过滤器当中的![image-20240416040220638](img/image-20240416040220638.png)
 ![image-20240416040313417](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416040313417.png)
-![image-20240416040731487](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416040731487.png)
-![image-20240416040827298](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416040827298.png)
+![image-20240416040731487](img/image-20240416040731487.png)
+![image-20240416040827298](img/image-20240416040827298.png)

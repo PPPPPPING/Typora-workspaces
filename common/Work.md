@@ -54,72 +54,6 @@ postman连接的ip地址  http://47.95.4.88:30020
 用户adminaq1、adminaq2，密码都是Admin@123
 ```
 
-# doris
-
-```mysql
-显示创建语句
-SHOW CREATE TABLE ods_fukuan_leixing
-
-
-删除
-DELETE FROM erp_ys WHERE ys_lsh !=  '220fg1300690139'
-
-
-创建
-CREATE TABLE `ods_fukuan_leixing` (
-  `id` varchar(20) NULL COMMENT "编码",
-  `des` varchar(50) NULL COMMENT "描述"
-) ENGINE=OLAP
-UNIQUE KEY(`id`)
-COMMENT "付款类型"
-DISTRIBUTED BY HASH(`id`) BUCKETS 10
-PROPERTIES (
-"replication_allocation" = "tag.location.default: 3",
-"in_memory" = "false",
-"storage_format" = "V2"
-);
-
-
-
-添加
-insert into ods_khtype(id,des) VALUES(1,'工商户');
-
-
-https://ds-pc.mps.tianlungas.com/prod-api/api/f1d5413e/GET
-
-
-
-增加列
-ALTER TABLE del_erp_ss ADD COLUMN SS_RQ1 DATETIME DEFAULT NULL;
-
-修改表名
-alter table erp_ss_ss rename  erp_ss_ss1;
-
-删除表名
-drop table
-
-//查id重复
-SELECT ICJL_ID 
-FROM ic_caozuo_jilu a
-WHERE ((SELECT COUNT(*)
-FROM ic_caozuo_jilu
-WHERE ICJL_ID = a.ICJL_ID) > 1)
-AND rownum < 100
-ORDER BY ICJL_ID DESC
-```
-
-```
-Doris连接信息： ip: 114.116.234.182 port: 9030 username: fiadmin password: admin#123
-
-
-更大权限
-Doris连接信息：
-ip: 114.116.234.182
-port: 9030
-username: dfadmin
-password: admin#123
-```
-
 # fi-pay-center-channel cebpayserviceimpl
 
 fi etbc
@@ -202,19 +136,9 @@ biz_channelServiceAccountpartner表和biz_channelServiceAccount表通过csaId关
 
 商户订单号就是支付流水号
 
-
-
-
-
-![image-20230915175023548](/Users/chenxi/Library/Application Support/typora-user-images/image-20230915175023548.png)
+![image-20230915175023548](img/image-20230915175023548.png)
 
 unifiedOrder
-
-
-
-
-
-
 
 # 商户渠道配置相关表
 
@@ -302,33 +226,33 @@ https://mp.weixin.qq.com/wxamp/newtmpl/tmpllib?view=cate&nav=10019&token=1232273
 
 # ==业务一张图==																																																																
 
-<img src="/Users/chenxi/Library/Application Support/typora-user-images/image-20231008092014249.png" alt="image-20231008092014249" style="zoom:150%;" />
+<img src="img/image-20231008092014249.png" alt="image-20231008092014249" style="zoom:150%;" />
 
 # 兴业
 
 ### 表配置
 
-![image-20231010094623662](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010094623662.png)
+![image-20231010094623662](img/image-20231010094623662.png)
 
-配置  ![image-20231010094642658](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010094642658.png)
+配置  ![image-20231010094642658](img/image-20231010094642658.png)
 
 能拿到协议和什么表
 
-![image-20231010094759193](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010094759193.png)
+![image-20231010094759193](img/image-20231010094759193.png)
 
 pk是户号
 
-![image-20231010094906676](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010094906676.png)
+![image-20231010094906676](img/image-20231010094906676.png)
 
 找前置去了
 
-![image-20231010095204929](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010095204929.png)
+![image-20231010095204929](img/image-20231010095204929.png)
 
 对面的参数 需要解密 
 
 
 
-![image-20231010095407977](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010095407977.png)
+![image-20231010095407977](img/image-20231010095407977.png)
 
 appid 来自bizchannelserviceaccout.appid(来自微信应用的appid,第三方支付时我们随机取)
 
@@ -465,17 +389,15 @@ transaction_id(别人传给我)
 
 对账文件名 日期在前
 
-![截屏2023-10-10 15.33.05](/Users/chenxi/Desktop/截屏2023-10-10 15.33.05.png)
-
 是否只有微信生活缴费
 
 缴费类型预存补
 
-![image-20231010165106608](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010165106608.png)
+![image-20231010165106608](img/image-20231010165106608.png)
 
-![image-20231010165200012](/Users/chenxi/Library/Application Support/typora-user-images/image-20231010165200012.png)
+![image-20231010165200012](img/image-20231010165200012.png)
 
-![image-20231011171210258](/Users/chenxi/Library/Application Support/typora-user-images/image-20231011171210258.png)
+![image-20231011171210258](img/image-20231011171210258.png)
 
 11和13 都要做 11时为普表,按照用户查,iot_query_type不需要, 13时,iot_query_type需要(爱山东和微信缴费逻辑)
 
@@ -491,32 +413,29 @@ attach(传账单号)
 
 1804300071829,1806240692500,1807310823746
 
-![image-20231013102027658](/Users/chenxi/Library/Application Support/typora-user-images/image-20231013102027658.png)
+![image-20231013102027658](img/image-20231013102027658.png)
 
 查询类型
 
 1. 有账户余额和欠费(物联网表)
 
-![image-20231017102451923](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017102451923.png)
+![image-20231017102451923](img/image-20231017102451923.png)
 
 查询结果
-![image-20231017102658288](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017102658288.png)
+![image-20231017102658288](img/image-20231017102658288.png)
 
-2. 余额为0,有欠费(普表)![image-20231017103031966](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017103031966.png)
+2. 余额为0,有欠费(普表)
 
+![image-20231017103031966](img/image-20231017103031966.png)
 
 查询结果
-![image-20231017103136368](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017103136368.png)
+![image-20231017103136368](img/image-20231017103136368.png)
 
+![image-20231017104633837](img/image-20231017104633837.png)
 
+![企业微信截图_b293092e-bfeb-48c5-8154-83b39ebdfc34](img/企业微信截图_b293092e-bfeb-48c5-8154-83b39ebdfc34.png)
 
-![image-20231017104633837](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017104633837.png)
-
-![企业微信截图_b293092e-bfeb-48c5-8154-83b39ebdfc34](/Users/chenxi/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/6D0B45F71B0B1AC1F454F69A0648B0DF/Caches/Images/1970-1/f2e1c22be0eb252858bdfe87f692b224_HD/企业微信截图_b293092e-bfeb-48c5-8154-83b39ebdfc34.png)
-
-
-
-![image-20231017113929058](/Users/chenxi/Library/Application Support/typora-user-images/image-20231017113929058.png)
+![image-20231017113929058](img/image-20231017113929058.png)
 
 # 做交易生成交易记录
 
@@ -839,934 +758,7 @@ jsonCopy code
 <img src="/Users/chenxi/Library/Application Support/typora-user-images/image-20231221111711967.png" alt="image-20231221111711967" style="zoom:50%;" />
 
 异步处理响应:
-入库时就将发送mq, 消费者收到时就 调用审批接口传参过去
-
-```mermaid
-sequenceDiagram
-		对象A->>对象B:对象B你好吗（请求）
-		Note right of 对象B:对象B的描述（提示）
-		Note left of 对象A:提示
-		对象B-->>对象A:我很好（响应）
-		对象B->>对象C:你好吗？
-		对象C-->>对象A: B找我了
-		对象A->>对象B:你确定？
-		note over 对象C,对象B:朋友
-		participant D
-		note right of D:没人陪我
-```
-
-```mermaid
-classDiagram
-      Animal <|-- Duck
-      Animal <|-- Fish
-      Animal <|-- Zebra
-      Animal : +int age
-      Animal : +String gender
-      Animal: +isMammal()
-      Animal: +mate()
-      class Duck{
-          +String beakColor
-          +swim()
-          +quack()
-      }
-      class Fish{
-          -int sizeInFeet
-          -canEat()
-      }
-      class Zebra{
-          +bool is_wild
-          +run()
-      }
-```
-
-```mermaid
-mindmap
-root
-	A
-		A1
-		A2不是
-	B
-		B1
-		B2
-			BB
-				CC
-	C
-	D
-	E
-		F
-		D
-		史蒂夫
-		阿斯顿发
-			第三方
-			阿斯顿发
-```
-
-
-
-
-
-# hosts系统配置
-
-系统hosts
-
-```
-192.168.1.251 lowcode.mps-dev.f-insight.com
-192.168.1.251 config-center.mps-dev.f-insight.com
-192.168.1.251 mps-dev.server.com
-192.168.1.251 mps-dev.f-insight.com
-192.168.1.251 account.mps-dev.f-insight.com
-192.168.1.251 alarm.mps-dev.f-insight.com
-192.168.1.251 alarm-pc.mps-dev.f-insight.com
-192.168.1.251 console.mps-dev.f-insight.com
-192.168.1.251 audit.mps-dev.f-insight.com
-192.168.1.251 big-screen-pc.mps-dev.f-insight.com
-192.168.1.251 ds-pc.mps-dev.f-insight.com
-192.168.1.251 datav.mps-dev.f-insight.com
-192.168.1.251 data-visualization-pc.mps-dev.f-insight.com
-192.168.1.251 doris.mps-dev.f-insight.com
-192.168.1.251 downloader.mps-dev.f-insight.com
-192.168.1.251 downloader-pc.mps-dev.f-insight.com
-192.168.1.251 ds.mps-dev.f-insight.com
-192.168.1.251 dubbo.mps-dev.f-insight.com
-192.168.1.251 ealcm.mps-dev.f-insight.com
-192.168.1.251 ealcm-pc.mps-dev.f-insight.com
-192.168.1.251 alarm-ws.mps-dev.f-insight.com
-192.168.1.251 ancient-push-ov-pc.mps-dev.f-insight.com
-192.168.1.251 ancient-push-pc.mps-dev.f-insight.com
-192.168.1.251 attendance-management-pc.mps-dev.f-insight.com
-192.168.1.251 cis-pc.mps-dev.f-insight.com
-192.168.1.251 portal.mps-dev.f-insight.com
-192.168.1.251 report.mps-dev.f-insight.com
-192.168.1.251 smart-water-webview.mps-dev.f-insight.com
-192.168.1.251 system.mps-dev.f-insight.com
-192.168.1.251 worker-order2-pc.mps-dev.f-insight.com
-192.168.1.251 worker-order-pc.mps-dev.f-insight.com
-192.168.1.251 workflow-pc.mps-dev.f-insight.com
-192.168.1.251 workflow-model.mps-dev.f-insight.com
-192.168.1.251 monitor-analysis-pc.mps-dev.f-insight.com
-192.168.1.251 lowcode.mps-dev.f-insight.com
-
-192.168.3.20 mps-dev.f-insight.com
-192.168.3.20 portal.mps-dev.f-insight.com
-192.168.3.20 account.mps-dev.f-insight.com
-192.168.3.20 console.mps-dev.f-insight.com
-
-192.168.3.20 sso-pc.mps-dev.f-insight.com
-192.168.3.20 sso.mps-dev.f-insight.com
-192.168.3.20 system-pc.mps-dev.f-insight.com
-192.168.3.20 system.mps-dev.f-insight.com
-
-```
-
-ping
-
-```
-127.0.0.1 console.mps-qa.f-insight.com
-127.0.0.1 console.mps-dev.f-insight.com
-```
-
-dev
-
-```
-192.168.1.251 lowcode.mps-dev.f-insight.com
-192.168.1.251 config-center.mps-dev.f-insight.com
-192.168.1.251 mps-dev.server.com
-192.168.1.251 mps-dev.f-insight.com
-192.168.1.251 account.mps-dev.f-insight.com
-192.168.1.251 alarm.mps-dev.f-insight.com
-192.168.1.251 alarm-pc.mps-dev.f-insight.com
-192.168.1.251 console.mps-dev.f-insight.com
-192.168.1.251 audit.mps-dev.f-insight.com
-192.168.1.251 big-screen-pc.mps-dev.f-insight.com
-192.168.1.251 ds-pc.mps-dev.f-insight.com
-192.168.1.251 datav.mps-dev.f-insight.com
-192.168.1.251 data-visualization-pc.mps-dev.f-insight.com
-192.168.1.251 doris.mps-dev.f-insight.com
-192.168.1.251 downloader.mps-dev.f-insight.com
-192.168.1.251 downloader-pc.mps-dev.f-insight.com
-192.168.1.251 ds.mps-dev.f-insight.com
-192.168.1.251 dubbo.mps-dev.f-insight.com
-192.168.1.251 ealcm.mps-dev.f-insight.com
-192.168.1.251 ealcm-pc.mps-dev.f-insight.com
-192.168.1.251 alarm-ws.mps-dev.f-insight.com
-192.168.1.251 ancient-push-ov-pc.mps-dev.f-insight.com
-192.168.1.251 ancient-push-pc.mps-dev.f-insight.com
-192.168.1.251 attendance-management-pc.mps-dev.f-insight.com
-192.168.1.251 cis-pc.mps-dev.f-insight.com
-192.168.1.251 portal.mps-dev.f-insight.com
-192.168.1.251 report.mps-dev.f-insight.com
-192.168.1.251 smart-water-webview.mps-dev.f-insight.com
-192.168.1.251 system.mps-dev.f-insight.com
-192.168.1.251 worker-order2-pc.mps-dev.f-insight.com
-192.168.1.251 worker-order-pc.mps-dev.f-insight.com
-192.168.1.251 workflow-pc.mps-dev.f-insight.com
-192.168.1.251 workflow-model.mps-dev.f-insight.com
-192.168.1.251 monitor-analysis-pc.mps-dev.f-insight.com
-192.168.1.251 lowcode.mps-dev.f-insight.com
-
-192.168.3.20 mps-dev.f-insight.com
-192.168.3.20 portal.mps-dev.f-insight.com
-192.168.3.20 account.mps-dev.f-insight.com
-192.168.3.20 console.mps-dev.f-insight.com
-
-192.168.3.20 sso-pc.mps-dev.f-insight.com
-192.168.3.20 sso.mps-dev.f-insight.com
-192.168.3.20 system-pc.mps-dev.f-insight.com
-192.168.3.20 system.mps-dev.f-insight.com
-```
-
-# 呼叫-知识库
-
-## 我的知识库-创建知识库
-
-### 调用dubbo接口查询 部门表(部门接口)
-
-| 出参 |          |
-| ---- | -------- |
-|      | 部门id   |
-|      | 部门名称 |
-
-### 新增知识库接口
-
-kd_knowledge_base + kd_visible_scope
-
-| 入参     |                                                              |
-| -------- | ------------------------------------------------------------ |
-| kd_name  | 知识库名称                                                   |
-| kd_intro | 知识库简介                                                   |
-| kd_type  | '知识库类型 00-普通知识库 01-应答知识库'                     |
-|          |                                                              |
-| dept_id  | 部门ID(调用部门接口)(新增kd_visible_scope : kd_id ,  dept_id) |
-
-| 出参         |              |
-| ------------ | ------------ |
-| create_by    | 创建人       |
-| create_by_id | 创建人用户id |
-| create_at    | 创建时间     |
-| update_at    | 更新时间     |
-| kd_logo      | 知识库logo   |
-
-### 更新权限接口(编辑知识库权限结接口)
-
-kd_member_info
-
-| 入参    |        |
-| ------- | ------ |
-| user_id | 成员ID |
-
-| 出参           |                         |
-| -------------- | ----------------------- |
-| authority_code | 权限编码 对应数据字典   |
-| kd_id          | 知识库ID                |
-| create_at      | 创建时间                |
-| update_at      | 更新时间                |
-| is_creator     | 是否是创建人 0-不是1-是 |
-
-
-
-## 查询我的知识库
-
-### 调用登录接口
-
-| 出参    |        |
-| ------- | ------ |
-| user_id |        |
-| dept_id | 部门id |
-
-### 查询我的知识库接口
-
-kd_knowledge_base + kd_visible_scope
-
-| 入参    |        |
-| ------- | ------ |
-| dept_id | 部门id |
-
-| 出参         |            |
-| ------------ | ---------- |
-| kd_name      | 知识库名称 |
-| kd_intro     | 知识库简介 |
-| kd_logo      | 知识库logo |
-| create_by    |            |
-| create_by_id |            |
-| create_at    |            |
-| update_at    |            |
-
-## 我的知识库-设置我的知识库
-
-### 上传图片的接口
-
-### 查询是否有可编辑知识库的权限接口(查询知识库权限接口)
-
-| 入参                  |            |
-| --------------------- | ---------- |
-| user_id               | 成员用户id |
-| kd_knowledge_base(id) | 知识库id   |
-
-| 出参           |                         |
-| -------------- | ----------------------- |
-| authority_code | 权限编码 对应数据字典   |
-| kd_id          | 知识库ID                |
-| create_at      | 创建时间                |
-| update_at      | 更新时间                |
-| is_creator     | 是否是创建人 0-不是1-是 |
-
-### 根	据知识库id查询知识库信息接口 
-
-kd_knowledge_base	
-
-| 入参 |          |
-| ---- | -------- |
-| id   | 知识库id |
-
-| 出参         |                                        |
-| ------------ | -------------------------------------- |
-| kd_name      | 知识库名称                             |
-| kd_intro     | 知识库简介                             |
-| kd_type      | 知识库类型 00-普通知识库 01-应答知识库 |
-| create_by    | 创建人                                 |
-| create_at    | 创建时间                               |
-| update_at    | 更新时间                               |
-| create_by_id | 创建人用户id                           |
-| t_id         | 知识库归属的租户                       |
-| kd_logo      | 知识库logo                             |
-| remark       | 备注                                   |
-
-### (部门接口)
-
-### 编辑知识库设置接口
-
-kd_knowledge_base + kd_visible_scope
-
-| 入参     |            |
-| -------- | ---------- |
-| kd_logo  | 知识库logo |
-| kd_name  | 知识库标题 |
-| kd_intro | 知识库简介 |
-|          |            |
-| dept_id  | 部门ID     |
-
-### (编辑知识库权限结接口)
-
-### 成员管理
-
-#### 添加成员
-
-##### (部门接口)
-
-##### 调用dubbo查询成员接口
-
-| 入参 |      |
-| ---- | ---- |
-| 姓名 |      |
-| 部门 |      |
-
-| 出参 |          |
-| ---- | -------- |
-|      | 姓名     |
-|      | 工号     |
-|      | 头像     |
-|      | 所属部门 |
-
-##### 立即添加新增接口==(编辑知识库权限结接口)
-
-kd_member_info
-
-| 入参           |                                 |
-| -------------- | ------------------------------- |
-| user_id        | 成员用户ID                      |
-| authority_code | 默认给可编辑权限                |
-| is_creator     | 是否是创建人 0-不是1-是 默认为0 |
-
-#### 成员权限修改接口	==(	编			辑知识		库								权限结接口)
-
-kd_member_info
-
-| 入参           |                       |
-| -------------- | --------------------- |
-| authority_code | 权限编码 对应数据字典 |
-
-#### 查询成员接口
-
-kd_member_info
-
-| 入参                         |          |
-| ---------------------------- | -------- |
-| kd_knowledge_base(id)>>kd_id | 知识库id |
-
-#### (查询知识库权限接口)
-
-| 出参                    |      |
-| ----------------------- | ---- |
-| kd_member_info(user_id) |      |
-| authority_code          |      |
-| is_creator              |      |
-
-#### 删除接口
-
-kd_member_info
-
-| 入参    |        |
-| ------- | ------ |
-| user_id | 成员id |
-
-## 我的知识库-普通库-文档
-
-### 知识库标题查询搜索(如果是知识库成员就是查kd_doc , 如果是不是成员就查kd_doc_publish)
-
-#### 判断是否是知识库成员接口(查询知识库权限接口)
-
-(查询知识库权限接口)>>传入user_id , 查询kd_member_info中的kd_id , 判断kd_doc里面的kd_id有没有kd_member_info中的kd_id
-
-### 知识库成员
-
-#### (查询知识库权限接口)
-
-#### (查询文档信息接口)
-
-kd_doc
-
-| 入参    |                  |
-| ------- | ---------------- |
-| kd_id   | 知识库ID         |
-| p_dc_id | 父文档id(非必填) |
-
-| 出参            |                                              |
-| --------------- | -------------------------------------------- |
-| title           | 文档标题                                     |
-| content         | 文档内容                                     |
-| cstate          | 状态 00-已发布 01-编辑中 02-待发布 03-已删除 |
-| create_by       | 创建人                                       |
-| create_by_id    | 创建人ID                                     |
-| look_count      | 浏览量                                       |
-| p_dc_id         | 父文档ID(list)                               |
-| last_editor     | 最后编辑人                                   |
-| last_editor_id  | 最后编辑人ID                                 |
-| last_opt_status | 最后一次的操作状态                           |
-
-#### 知识库成员-知识库标题查询搜索
-
-kd_doc
-
-| 入参  |          |
-| ----- | -------- |
-| kd_id | 知识库id |
-| title | 标题     |
-
-| 出参            |          |
-| --------------- | -------- |
-| id              |          |
-| title           | 文档标题 |
-| content         | 文档内容 |
-| cstate          |          |
-| create_by       |          |
-| create_by_id    |          |
-| look_count      |          |
-| p_dc_id         |          |
-| last_editor     |          |
-| last_editor_id  |          |
-| last_opt_status |          |
-
-####  新增文档接口
-
-kd_doc
-
-| 入参            |      |
-| --------------- | ---- |
-| kd_id           |      |
-| title           |      |
-| content         |      |
-| t_id            |      |
-| ownership       |      |
-| create_by       |      |
-| create_by_id    |      |
-| p_dc_id         |      |
-| last_editor     |      |
-| last_edit_time  |      |
-| last_editor_id  |      |
-| last_opt_status |      |
-
-#### (文档修改接口)
-
-#### 发布文档接口
-
-新增kd_doc_publish  /   修改 (是否传id)
-
-| 入参              |        |
-| ----------------- | ------ |
-| kd_doc(id)>>kd_id | 文档id |
-| publisher_id      |        |
-| publisher         |        |
-| create_at         |        |
-| content           |        |
-| title             |        |
-| update_at         |        |
-| cversion          |        |
-
-### 删除接口
-
-kd_doc删除
-
-| 入参   |                                              |
-| ------ | -------------------------------------------- |
-| id     |                                              |
-| cstate | 状态 00-已发布 01-编辑中 02-待发布 03-已删除 |
-
-kd_doc_publish删除
-
-kd_doc_publish  +  kd_doc  where  cstate = 已发布
-
-### 非知识库成员
-
-#### (非知识库成员查询文档接口)
-
-kd_doc_publish + kd_doc
-
-| 入参               |        |
-| ------------------ | ------ |
-| kd_doc(id)>>doc_id | 文档ID |
-
-| 出参            |                    |
-| --------------- | ------------------ |
-| publisher_id    | 发布人ID           |
-| publisher       | 发布人             |
-| create_at       |                    |
-| content         |                    |
-| title           |                    |
-| update_at       |                    |
-| cversion        |                    |
-|                 |                    |
-| look_count      | 浏览量             |
-| p_dc_id         | 父文档ID           |
-| last_editor     | 最后编辑人         |
-| last_edit_time  | 最后编辑时间       |
-| last_editor_id  | 最后编辑人ID       |
-| last_opt_status | 最后一次的操作状态 |
-
-#### 非知识库成员-知识库标题查询搜索接口(非知识库成员查询文档接口)
-
-### 修改记录接口(预览,恢复)
-
-每改变一次状态就新增一条记录
-
-kd_doc_opt_log
-
-| 入参      |                                                        |
-| --------- | ------------------------------------------------------ |
-| doc_id    | 文档id                                                 |
-| opt_type  | 操作类型 0-新增 1-编辑 2-申请发布 3-发布 4-删除 5-恢复 |
-| opt_by    | 操作员                                                 |
-| opt_by_id | 操作员ID                                               |
-| content   | 文档内容                                               |
-| title     | 文档标题                                               |
-
-## 我的知识库-回收站
-
-### (查询知识库权限结接口)				
-
-### 回收站文章记录接口(查询文档信息接口)
-
-### 回收站文章预览接口(查询文档信息接口)
-
-### 恢复(修改)文档接口(文档修改接口)
-
-## 我的知识库-应答库-文档
-
-### (查询知识库权限结接口)
-
-### (查询文档信息接口)
-
-kd_doc
-
-| 入参    |          |
-| ------- | -------- |
-| kd_id   | 知识库ID |
-| p_dc_id | 1?>      |
-
-| 出参            |                                              |
-| --------------- | -------------------------------------------- |
-| title           | 文档标题                                     |
-| content         | 文档内容                                     |
-| cstate          | 状态 00-已发布 01-编辑中 02-待发布 03-已删除 |
-| create_by       | 创建人                                       |
-| create_by_id    | 创建人ID                                     |
-| look_count      | 浏览量                                       |
-| p_dc_id         | 父文档ID(list)                               |
-| last_editor     | 最后编辑人                                   |
-| last_editor_id  | 最后编辑人ID                                 |
-| last_opt_status | 最后一次的操作状态                           |
-|                 |                                              |
-| ckeyword        | 关键字                                       |
-| create_at       | 创建时间                                     |
-| update_at       | 更新时间                                     |
-| del_flag        | 删除标识 0-启用 1-删除                       |
-
-### (文档修改接口)
-
-## 知识库搜索
-
-### (部门接口)
-
-### 知识库标题搜索接口-知识库标题查询搜索(如果是知识库成员就是查kd_doc , 如果是不是成员就查kd_doc_publish)
-
-(查询知识库权限接口)>>传入user_id , 查询kd_mem	ber_info中的kd_id , 判断kd	_doc里面的kd_id有没有kd_member_info中的kd	_id
-
-kd_doc
-
-| 入参    |          |
-| ------- | -------- |
-| title   | 文档标题 |
-|         |          |
-| dept_id | 部门id   |
-
-| 出参    |          |
-| ------- | -------- |
-| id      |          |
-| kd_id   | 知识库id |
-| title   | 文章标题 |
-| content | 文章内容 |
-
-# documentCamera
-
-## 点击事件 API
-
-table fi_event 给客户用  quan 权限设计
-
-| 入参         |                |
-| ------------ | -------------- |
-| tenant_id    | 租户id         |
-| source       | 来源(定好标准) |
-| callback_url | 回调地址       |
-| link_url     | 跳转页面       |
-|              |                |
-
-| 出参      |        |
-| --------- | ------ |
-| event_id  | 事件id |
-| local_url |        |
-
-
-
-## 证件查询 API   本地管理后台 校验
-
-shun xu
-
-table fi_doc_type
-
-| 入参      |        |
-| --------- | ------ |
-| tenant_id | 租户id |
-| eventid   |        |
-
-| 出参          |              |
-| ------------- | ------------ |
-| id            | 类型id       |
-| doc_type      | 证件类型     |
-| doc_type_name | 证件类型名称 |
-| cstuate       | 状态         |
-| tenant_id     | 租户号       |
-
-## 证件添加 API 
-
-fi_documents fi_deed fi_id_card 判断是否房产证 身份证 添加到不同的表
-
-| 入参      |          |
-| --------- | -------- |
-| doc_type  | 证件类型 |
-| event_id  | 事件id   |
-| base_code | base64   |
-
-| 出参      |          |
-| --------- | -------- |
-| tenant_id | 租户id   |
-| msg       | 响应结果 |
-
-## 提交 API (回调)
-
-调用提供的url , 拿到一些参数event_id,tenant_id
-
-根据event_id,tenant_id回调数据给他
-
-erm.mps-qa.f-insight.com
-
-
-
--- --
-
-# documentCamera
-
-## 点击事件 API
-
-table fi_event
-
-| 入参      |        |
-| --------- | ------ |
-| tenant_id | 租户id |
-| event_id  | 事件id |
-
-| 出参 |          |
-| ---- | -------- |
-| msg  | 响应结果 |
-|      |          |
-
-
-
-## 证件查询 API
-
-table fi_doc_type
-
-| 入参      |        |
-| --------- | ------ |
-| tenant_id | 租户id |
-| cstuate   | 状态   |
-|           |        |
-
-| 出参          |              |
-| ------------- | ------------ |
-| id            | 类型id       |
-| doc_type      | 证件类型     |
-| doc_type_name | 证件类型名称 |
-| cstuate       | 状态         |
-| tenant_id     | 租户号       |
-
-## 证件添加 API 
-
-fi_documents fi_deed fi_id_card 判断是否房产证 身份证 添加到不同的表
-
-| 入参          |              |
-| ------------- | ------------ |
-| tenant_id     | 租户id       |
-| doc_type      | 证件类型     |
-| doc_type_name | 证件类型名称 |
-| event_id      | 事件id       |
-| picture_url   | 图片url      |
-| base_code     | base64       |
-
-| 出参      |          |
-| --------- | -------- |
-| tenant_id | 租户id   |
-| msg       | 响应结果 |
-
-## 提交 API (回调)
-
-回调之前调用一次证件查询接口
-
-| 入参      |      |
-| --------- | ---- |
-| tenant_id |      |
-| event_id  |      |
-|           |      |
-
-| 出参        |          |
-| ----------- | -------- |
-| base_code   | base64   |
-| doc_type    | 证件类型 |
-| tenant_id   | 租户id   |
-| event_id    | 事件id   |
-| create_time | 创建时间 |
-| picture_url | 图片url  |
-
-### 提交api
-
-fi_event
-
-| 入参         |          |
-| ------------ | -------- |
-| event_id     | 事件id   |
-| callback_url | 回调地址 |
-| link_url     | 跳转页面 |
-| tenant_id    | 租户ID   |
-
-
-
-给我一个地址回调给他
-
-点击按钮 》 打开一个网址  〉 
-
-别人调用要生成envid  他那里要存
-
-
-
-![image-20230518110459315](/Users/chenxi/Library/Application Support/typora-user-images/image-20230518110459315.png)
-
-![image-20230518110513984](/Users/chenxi/Library/Application Support/typora-user-images/image-20230518110513984.png)
-
-![image-20230518110529739](/Users/chenxi/Library/Application Support/typora-user-images/image-20230518110529739.png)
-
-![image-20230518110546720](/Users/chenxi/Library/Application Support/typora-user-images/image-20230518110546720.png)
-
-![image-20230601104322216](/Users/chenxi/Library/Application Support/typora-user-images/image-20230601104322216.png)
-
-
-
-![image-20230601104419103](/Users/chenxi/Library/Application Support/typora-user-images/image-20230601104419103.png)
-
-
-
-http://e-record-web.eslink.cc/#/?eventId=d2c57c93d5d048c9ba853fc408dbd959
-
-http://e-record-web.eslink.cc/#/?eventId=56619d2e843b41b581140114c2113aa0
-
-http://e-record-web.eslink.cc/#/?eventId=62dcbd86f4ad43dc85dcde981a319441
-
-![image-20230522151503330](/Users/chenxi/Library/Application Support/typora-user-images/image-20230522151503330.png)
-
-```mysql
-CREATE TABLE fi_doc_type (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  doc_type VARCHAR(255),
-  tenant_id INT,
-  -- 添加外键约束
-  FOREIGN KEY (tenant_id) REFERENCES tenants (id)
-);
-```
-
-```mysql
-CREATE TABLE fi_documents (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  doc_type_id VARCHAR(255),
-  `picture_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单的logo',
-  event_id,
-  tenant_id INT,
-  -- 添加外键约束
-  FOREIGN KEY (tenant_id) REFERENCES tenants (id)
-);
-```
-
-# report
-
-```mysql
-Doris连接信息：
-ip: 114.116.234.182
-port: 9030
-username: dfadmin
-password: admin#123
-```
-
-```mysql
-SELECT
-        -- cd.id,
-        cd.end_time 结束时间,
-        cf.company_id 公司id,
-        DATE_FORMAT(cd.month_bill_date,'%Y-%m') 账期,
-        cd.cust_identity_id 客户ID,
-        cd.cust_name 客户名,
-        cd.cust_phone 客户电话,
-        cd.addr_code 用户号,
-        cf.amt 金额,
-        cf.use_kind 使用性质
-FROM
-        ods_cust_day_bill_fee_vo cf 
-        LEFT JOIN ods_cust_day_bill_vo cd on cf.day_bill_id = cd.id
-        order by cd.end_time desc
-        limit 49;
-```
-
-```mysql
-"查询时间:" + format(now(), "yyyy-MM-dd HH:mm:ss") + "    查询人:" + $cisUsername
-
-"使用性质：" + IF(len(useKind) = 0, "-", MAP(useKind, "useKind", 1, 2)) 
-+ "    收款时间：" + if(len(endTime) = 0 && len(startTime) = 0, "-", startTime + " 至 " + endTime)
-```
-
-```
-var params = [];
-parent.window.callback(params);
-```
-
-```mysql
-${IF(len(cisCompanyId) == 0,"","and cf.company_id = '" + cisCompanyId + "'")}
-${if(len(useKind) == 0,"","and cf.use_kind = '" + useKind + "'")}
-${if(len(startTime) == 0,"","and cd.end_time >= '" + startTime + "'" )}
-${if(len(endTime) == 0,"","and cd.end_time <= '" + endTime + "'")}
-```
-
-```mysql
-分页
-${if(len(page) == 0,"","limit " + (page - 1)*rows + "," + rows)}
-
-ceil(count(*)/${rows}) as num, count(*) zl
-```
-
-```mysql
-CREATE TABLE `dwd_demo` (
-  `id` varchar(150) NOT NULL COMMENT "Id",
-  `end_time` datetime NULL COMMENT "结束时间",
-  `company_id` varchar(150) NULL COMMENT "公司id",
-  `month_bill_date` varchar(150) NULL COMMENT "账期",
-  `cust_identity_id` varchar(150) NULL COMMENT "客户ID",
-  `cust_name` varchar(150) NULL COMMENT "客户ID",
-  `cust_phone` varchar(150) NULL COMMENT "客户电话",
-  `addr_code` varchar(150) NULL COMMENT "用户号",
-  `amt` varchar(150) NULL COMMENT "金额",
-  `use_kind` varchar(300) NULL COMMENT "使用性质"
-) ENGINE=OLAP
-UNIQUE KEY(`id`, `end_time`, `company_id`)
-COMMENT "演示报表"
-DISTRIBUTED BY HASH(`id`) BUCKETS 10
-PROPERTIES (
-"replication_allocation" = "tag.location.default: 3",
-"in_memory" = "false",
-"storage_format" = "V2"
-);
-
-
-INSERT INTO dwd_demo (
-  id,
-  end_time,
-  company_id,
-  month_bill_date,
-  cust_identity_id,
-  cust_name,
-  cust_phone,
-  addr_code,
-  amt,
-  use_kind
-) 
-SELECT
-cd.id,
-cd.end_time 结束时间,
-cf.company_id 公司id,
-DATE_FORMAT(cd.month_bill_date,'%Y-%m') 账期,
-cd.cust_identity_id 客户ID,
-cd.cust_name 客户名,
-cd.cust_phone 客户电话,
-cd.addr_code 用户号,
-cf.amt 金额,
-cf.use_kind 使用性质
-FROM
-ods_cust_day_bill_fee_vo cf 
-LEFT JOIN ods_cust_day_bill_vo cd on cf.day_bill_id = cd.id
-order by cd.end_time desc
-;
-```
-
-```
-菏泽市广菏天然气有限公司
-hzsghtrqyxgs/Qqkh1gm2
-正式环境参数：
-appid：91371702734730467C
-appsecret：bfc725d701264b3aa461664c58175adc
-token：4cab00b6e729400c945db926e59cc3b0
-
-曹县中天燃气有限公司
-cxztrqyxgs/p4gFaQNv
-正式环境参数：
-appid：91371721595239570X
-appsecret：2cf01697f384467a81f520a06ea00286
-token：d3a6aeb1c3924bf4bb9bf48ff0a82bce
-
-sxztrqyxgs/MSRfknL1
-单县中天燃气有限公司   生产
-appid：913717227884719073
-appsecret：09fa64ea04024e058ea4fd20750d9cfc
-token：5c94000dfae6406dabe086dca0ac96bc
-
-dmwjtrqsyyxgs/JSz821VUub
-东明万吉天然气实业有限公司   生产
-appid：91371728775295254G
-appsecret：a7580fd8e8f14485ac5afff25fb3cad1
-token：fa5dfd60007f4496a2ad11977ab23fa0
-```
+入库时就将发送mq, 消费者收到时就调用审批接口传参过去
 
 # 彭泽工改系统
 
@@ -1780,7 +772,7 @@ fi-business-handle
 
 *彭泽工改系统回调*
 
-![企业微信截图_1f468b9d-a7ac-43a9-8a63-79475de6ccf9](/Users/chenxi/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/6D0B45F71B0B1AC1F454F69A0648B0DF/Caches/Images/2023-07/21d66828b360ba7290167b201f807456_HD/企业微信截图_1f468b9d-a7ac-43a9-8a63-79475de6ccf9.png)
+![企业微信截图_1f468b9d-a7ac-43a9-8a63-79475de6ccf9](img/企业微信截图_1f468b9d-a7ac-43a9-8a63-79475de6ccf9.png)
 
 给工改系统一个接口, 提交数据过来, 将工改系统的字段转换成表单的字段
 
@@ -1809,17 +801,13 @@ fi-business-handle
 
 把记录插入到BillFileTradeRecord里面
 
-
-
 表配置,测试时配置文件上传路径
 
-<img src="/Users/chenxi/Library/Application Support/typora-user-images/image-20231009142019387.png" alt="image-20231009142019387" style="zoom:67%;" />
+<img src="img/image-20231009142019387.png" alt="image-20231009142019387" style="zoom:67%;" />
 
 获取对账文件示例:
 
 <img src="/Users/chenxi/Library/Application Support/typora-user-images/image-20231009143013676.png" alt="image-20231009143013676" style="zoom: 50%;" />
-
-
 
 找到定时任务运行模式标签(下载和对账的是定任务标签)
 
@@ -1837,20 +825,20 @@ mqProducer.billFileDownloadProducer(redisKey, getDelay(num++));
 
 payChannelId (dic_tradepaychannel.id)
 
-![image-20230920160326998](/Users/chenxi/Library/Application Support/typora-user-images/image-20230920160326998.png)
+![image-20230920160326998](img/image-20230920160326998.png)
 
-![image-20230920160357143](/Users/chenxi/Library/Application Support/typora-user-images/image-20230920160357143.png)
+![image-20230920160357143](img/image-20230920160357143.png)
 
 mechid (fi_etbc.biz_channelserviceaccountpartner.partnerId)
 
- ![image-20230921131312512](/Users/chenxi/Library/Application Support/typora-user-images/image-20230921131312512.png)
+![image-20230921131312512](img/image-20230921131312512.png)
 
-![image-20230921131346060](/Users/chenxi/Library/Application Support/typora-user-images/image-20230921131346060.png)
+![image-20230921131346060](img/image-20230921131346060.png)
 
 对账文件的名称为:
 fileNameIdentify = config.getFileNameIdentify() + fileDate;
 
-<img src="/Users/chenxi/Library/Application Support/typora-user-images/image-20231031175014022.png" alt="image-20231031175014022" style="zoom: 50%;" />
+<img src="img/image-20231031175014022.png" alt="image-20231031175014022" style="zoom: 50%;" />
 
 CEBCASHIER,982315199,000200,20230920
 
@@ -1859,7 +847,7 @@ partnerId:云缴费编号itemCode
 partnerKey:渠道标识siteCode
 公钥:partnerQueryKey
 
-![企业微信截图_b372d85f-234e-4db2-8157-74431234ba34](/Users/chenxi/Library/Containers/com.tencent.WeWorkMac/Data/Documents/Profiles/6D0B45F71B0B1AC1F454F69A0648B0DF/Caches/Images/2023-10/f991a348033e84813049c55c56a18428_HD/企业微信截图_b372d85f-234e-4db2-8157-74431234ba34.png)
+![企业微信截图_b372d85f-234e-4db2-8157-74431234ba34](img/企业微信截图_b372d85f-234e-4db2-8157-74431234ba34.png)
 
 支付下单扣款的时候需要这三个,兴业福费缴不是在我们这里扣款,不需要配置
 
@@ -1872,9 +860,9 @@ partnerKey:渠道标识siteCode
 3. 表具为正 余额为正
 4. 表具为正 余额为负
 
-![image-20231101003709433](/Users/chenxi/Library/Application Support/typora-user-images/image-20231101003709433.png)
+![image-20231101003709433](img/image-20231101003709433.png)
 
-![image-20231101003729514](/Users/chenxi/Library/Application Support/typora-user-images/image-20231101003729514.png)
+![image-20231101003729514](img/image-20231101003729514.png)
 
 首先验签
 
@@ -1886,25 +874,21 @@ partnerKey:渠道标识siteCode
 
 (对账 查询 对账文件多出如何处理 其他相关逻辑 数据库配置熟悉)
 
-
-
-![image-20231102091707070](/Users/chenxi/Library/Application Support/typora-user-images/image-20231102091707070.png)
+![image-20231102091707070](img/image-20231102091707070.png)
 
 //再次尝试同步
 boolean result = billCheckHandler(order.getMchOrderNo(), fileInfo, config);
 
+![image-20231102142918562](img/image-20231102142918562.png)
+![image-20231102142950898](img/image-20231102142950898.png)
 
+![image-20231102143230063](img/image-20231102143230063.png)
 
-![image-20231102142918562](/Users/chenxi/Library/Application Support/typora-user-images/image-20231102142918562.png)
-![image-20231102142950898](/Users/chenxi/Library/Application Support/typora-user-images/image-20231102142950898.png)
-
-![image-20231102143230063](/Users/chenxi/Library/Application Support/typora-user-images/image-20231102143230063.png)
-
-![image-20231102143255626](/Users/chenxi/Library/Application Support/typora-user-images/image-20231102143255626.png)
+![image-20231102143255626](img/image-20231102143255626.png)
 
 做交易的商户id mchid与 下载文件的商户id要一致
 
-![image-20231103182710297](/Users/chenxi/Library/Application Support/typora-user-images/image-20231103182710297.png)
+![image-20231103182710297](img/image-20231103182710297.png)
 
 
 
@@ -1933,26 +917,26 @@ fi_etbc.biz_billfilecheckconfig
 
 
 
-***\*对账\****
+*对账*
 
 1.表配置,测试时配置文件上传路径fi_etbc.biz_prelinkinfo
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps1.jpg) 
+![img](img/wps1.jpg) 
 
 字段link_type固定格式为:
 fi_etbc.biz_billfilecheckconfig.billServiceCode + fi_etbc.biz_billfilecheckconfig.mchId
 
 2. 设置定时任务运行模式标签(下载和对账的是定任务标签)
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps2.jpg) 
+![img](img/wps2.jpg) 
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps3.jpg) 
+![img](img/wps3.jpg) 
 
 任务参数分别为:payChannelCode,mchId,ownership,fileDate
 
 只配置payChannelCode时,对账日期默认为昨天
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps4.jpg) 
+![img](img/wps4.jpg) 
 
 光大配置为31,CEBCASHIER
 
@@ -1962,17 +946,15 @@ biz_billfilecheckconfig.payChannelId为dic_tradepaychannel.id
 
 billServiceCode为:ZZCEBPAY
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps5.jpg) 
+![img](img/wps5.jpg) 
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps6.jpg) 
+![img](img/wps6.jpg) 
 
-biz_billfilecheckconfig.mechid 为fi_etbc.biz_channelserviceaccountpartner.partnerId
+biz_billfilecheckconfig.mechid 为fi_etbc.biz_channelserviceaccountpartner.partnerId 
 
- 
+![img](img/wps7.jpg) 
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps7.jpg) 
-
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps8.jpg) 
+![img](img/wps8.jpg) 
 
 4.对账文件的名称为:
 
@@ -1980,7 +962,7 @@ fileNameIdentify = config.getFileNameIdentify() + fileDate;(光大文件格式)
 
 fileNameIdentify = fileDate + fi_etbc.biz_billfilecheckconfig.fileNameIdentify;(福费缴文件格式)
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps9.jpg) 
+![img](img/wps9.jpg) 
 
 5. 配置fi_etbc.biz_channelserviceaccountpartner表
 
@@ -1993,13 +975,9 @@ fi_etbc.biz_channelserviceaccountpartner.partnerKey:渠道标识siteCode
 公钥:
 fi_etbc.biz_channelserviceaccountpartner.partnerQueryKey
 
-fi_etbc.biz_channelserviceaccountpartner.tradePayChannel_id为dic_tradepaychannel.id
-
- 
+fi_etbc.biz_channelserviceaccountpartner.tradePayChannel_id为dic_tradepaychannel.id 
 
 多出文件记录如何处理: 重新进行补单,通过商户订单号再次查询数据库中我方订单列表,新增; 判断当天存在反交易,则取消进行补单,再次尝试同步
-
- 
 
 做交易的商户id mchid(fi_etbc.biz_channelserviceaccountpartner.mchId)与 下载文件的商户id(fi_etbc.biz_billfilecheckconfig.mchId)要一致
 
@@ -2007,17 +985,15 @@ fi_etbc.biz_channelserviceaccountpartner.tradePayChannel_id为dic_tradepaychanne
 
 6. fi_etbc.biz_billfilecheckconfig.billServiceCode固定为ZZCEBPAY
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps10.jpg) 
+![img](img/wps10.jpg) 
 
- 
-
-***\*兴业福费缴缴费信息查询\****
+兴业福费缴缴费信息查询
 
 fi_etbc.biz_thirdapi_org_config表配置
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps11.jpg) 
+![img](img/wps11.jpg) 
 
-![img](file:////Users/chenxi/Library/Containers/com.kingsoft.wpsoffice.mac.global/Data/tmp/wps-chenxi/ksohtml//wps12.jpg)app_id				应用ID，biz_channelserviceaccount.app_id
+![img](img/wps12.jpg)app_id				应用ID，biz_channelserviceaccount.app_id
 
 channel_code		渠道代码, 比如光大是 CEB
 
@@ -2033,161 +1009,18 @@ yucun_flag     是否支持预存
 
 app_secret     验签秘钥
 
-![image-20240102104059012](/Users/chenxi/Library/Application Support/typora-user-images/image-20240102104059012.png)
+![image-20240204101537504](img/image-20240204101537504.png)
 
-
-
-POS机管理
-
-# 澄海
-
-![image-20240116180614444](/Users/chenxi/Library/Application Support/typora-user-images/image-20240116180614444.png)
-
-ods_df_cis同步oracle里面的数据  有FEIYONG_JILU_SS等表
-
-ods_df_cis里面写sql
-
-```mysql
-SELECT
-	dw.kh_mc enterprise_name,
-	fyjl_yqzh uniscid,
-	dw.kh_zzjg_dm userinfo,
-	REPLACE ( a.jf, ',', ';' ) payment_detail,
-	b.sl monthly_consumption_3,
-	c.sl monthly_consumption_6,
-	CASE WHEN d.s IS NOT NULL THEN 'true' ELSE 'false'  END is_in_arrears
-FROM (
-SELECT
-	fyjl_yqzh,
-	kh_id,
-	group_concat(concat(sj, ':', cast(sl as varchar))) jf
-FROM (
-SELECT
-	fyjl_yqzh,
-	kh_id,
-	date_format(fyjl_sjjfrq, '%Y-%m') sj,
-	sum(fyjl_yje) sl
-FROM FEIYONG_JILU_SS
-WHERE 1 = 1
--- 	AND fyjl_sjjfrq >= '2022-10-01'
--- 	AND fyjl_sjjfrq < '2023-03-31'
-	AND kh_lx = '1'
-	AND ywdx_lx IN ('1', '2')
-	AND org_id LIKE '0030%'
-GROUP BY
-	fyjl_yqzh,
-	kh_id,
-	date_format(fyjl_sjjfrq, '%Y-%m') ) t
-GROUP BY
-	fyjl_yqzh,
-	kh_id ) a
-LEFT JOIN danweikehu dw ON a.kh_id = dw.kh_id
-LEFT JOIN (
-SELECT
-	cbjl_yqdz,
-	floor(avg(ifnull(cbjl_bcbd - cbjl_scbd, 0))) AS sl
-FROM CHAOBIAO_JILU
-WHERE 1 = 1
--- 	AND cbjl_sjcbrq >= '2022-10-01' 
--- 	AND cbjl_sjcbrq < '2023-03-31'
-	AND cbjl_kh_lx = '1' 
-	AND org_id LIKE '0030%'
-GROUP BY
-	cbjl_yqdz ) b ON a.fyjl_yqzh = b.cbjl_yqdz
-LEFT JOIN (
-SELECT
-	cb.cbjl_yqdz,
-	FLOOR(AVG(IFNULL(cb.cbjl_bcbd - cb.cbjl_scbd, 0))) sl 
-FROM CHAOBIAO_JILU cb 
-WHERE 1 = 1
--- 	AND cb.cbjl_sjcbrq >= DATE_FORMAT('2022-10-01', '%Y-%m-%d') 
--- 	AND cb.cbjl_sjcbrq < DATE_FORMAT('2023-03-31', '%Y-%m-%d') 
-	AND cb.cbjl_kh_lx = '1' 
-	AND cb.org_id LIKE '0030%' 
-GROUP BY
-	cb.cbjl_yqdz ) c ON a.fyjl_yqzh = c.cbjl_yqdz
-LEFT JOIN (
-SELECT DISTINCT
-	y.fyjl_yqzh s 
-FROM FEIYONG_JILU_YS y 
-WHERE 1 = 1
-	AND y.kh_lx = '1' 
-	AND y.ywdx_lx IN ( '1', '2' ) 
-	AND y.org_id LIKE '0030%' 
-	AND y.fyjl_zt = '4' ) d ON a.fyjl_yqzh = d.s 
-WHERE 1 = 1 
-	AND dw.kh_zzjg_dm IS NOT NULL 
-	AND b.sl IS NOT NULL;
-```
-
-插入澄海政务中间库
-
-enterprie_credit_collection_gas
-
-![image-20240116180932181](/Users/chenxi/Library/Application Support/typora-user-images/image-20240116180932181.png)
-
-
-
-用户信息配置到服务管理!
-
-一个便于使用 emoji 的插件
-特性：
-输入 emoji-unicode 或 emoji-code 的简单方法。
-自定义提示列表。
-自定义以 : 开头提示。
-自定义 emoji 扩展
-管理所有的emoji表情
-自定义 emoji 扩展说明：
-扩展根目录放置：emojis.json 文件
-emojis.json 文件格式如下:
-{
-  "emojis": [
-    {
-      "emoji": "🦺",
-      "entity": "",
-      "code": ":safety_vest:",
-      "description": "Add or update code related to validation.",
-      "name": "safety_vest",
-      "cn_description": "添加或更新与验证相关的代码。",
-      "semver": null
-    }
-  ]
-}
-根目录下创建 icons 目录，存储对应 emoji 的 png 图片（只支持png）
-emoji 对应的 png 图片名为 code 去除 : 所得
-
-![image-20240130100823839](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130100823839.png)
-
-![image-20240130100920054](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130100920054.png)
-
-![image-20240130101000968](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130101000968.png)
-
-![image-20240130101038486](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130101038486.png)
-
-![image-20240130170129226](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130170129226.png)
-
-![image-20240130170336808](/Users/chenxi/Library/Application Support/typora-user-images/image-20240130170336808.png)
-
-![image-20240131111946973](/Users/chenxi/Library/Application Support/typora-user-images/image-20240131111946973.png)
-
-![image-20240131111958453](/Users/chenxi/Library/Application Support/typora-user-images/image-20240131111958453.png)
-
-![image-20240131151222607](/Users/chenxi/Library/Application Support/typora-user-images/image-20240131151222607.png)
-
-
-
-![image-20240204101537504](/Users/chenxi/Library/Application Support/typora-user-images/image-20240204101537504.png)
-
-![image-20240204101605647](/Users/chenxi/Library/Application Support/typora-user-images/image-20240204101605647.png)
+![image-20240204101605647](img/image-20240204101605647.png)
 
 
 
 点击账户
-![image-20240204101657550](/Users/chenxi/Library/Application Support/typora-user-images/image-20240204101657550.png)
+![image-20240204101657550](img/image-20240204101657550.png)
 
 点击立即预交
-![image-20240204101759447](/Users/chenxi/Library/Application Support/typora-user-images/image-20240204101759447.png)
-![image-20240204101823528](/Users/chenxi/Library/Application Support/typora-user-images/image-20240204101823528.png)
+![image-20240204101759447](img/image-20240204101759447.png)
+![image-20240204101823528](img/image-20240204101823528.png)
 
 ```java
     /**
