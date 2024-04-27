@@ -1,5 +1,23 @@
 [toc]
 
+# 单表做分页查询会很慢，有什么优化方法
+
+# 对中间件了解吗，为什么选择rocketmq
+
+# 项目的问题 死锁
+
+# mq怎么实现消息顺序消费
+
+# 消息队列的选型，为什么延时任务不用rabbitmq
+
+# 消息丢失怎么解决
+
+# 6 rocketmq有没有遇到生产上的问题
+
+# 7 rocketmq的特性和其他用法了解吗
+
+# 8 rocketmq的持久化是怎么实现的
+
 # RocketMQ底层工作原理
 
 1. 启动NameServer，NameServer启动后开始监听端口，等待Broker、Producer、Consumer连接。 
@@ -7,6 +25,8 @@
 3. 发送消息前，可以先创建Topic，创建Topic时需要指定该Topic要存储在哪些Broker上，当然，在创 建Topic时也会将Topic与Broker的关系写入到NameServer中。不过，这步是可选的，也可以在发送消息时自动创建Topic。 						
 4. Producer发送消息，启动时先跟NameServer集群中的其中一台建立长连接，并从NameServer中获 取路由信息，即当前发送的Topic消息的Queue与Broker的地址(IP+Port)的映射关系。然后根据算法 策略从队选择一个Queue，与队列所在的Broker建立长连接从而向Broker发消息。当然，在获取到路由 信息后，Producer会首先将路由信息缓存到本地，再每30秒从NameServer更新一次路由信息
 5. Consumer跟Producer类似，跟其中一台NameServer建立长连接，获取其所订阅Topic的路由信息， 然后根据算法策略从路由信息中获取到其所要消费的Queue，然后直接跟Broker建立长连接，开始消费 其中的消息。Consumer在获取到路由信息后，同样也会每30秒从NameServer更新一次路由信息。不过不同于Producer的是，Consumer还会向Broker发送心跳，以确保Broker的存活状态。 
+
+![image-20240427183955721](img/image-20240427183955721.png)
 
 # Rocketmq同步发送
 

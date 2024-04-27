@@ -1,3 +1,5 @@
+[toc]
+
 # 环境
 
  工号 41
@@ -227,6 +229,8 @@ https://mp.weixin.qq.com/wxamp/newtmpl/tmpllib?view=cate&nav=10019&token=1232273
 # ==业务一张图==																																																																
 
 <img src="img/image-20231008092014249.png" alt="image-20231008092014249" style="zoom:150%;" />
+
+付款在我们这里走channel再走网关, 付款不在我们这边直接走网关,
 
 # 兴业
 
@@ -1021,73 +1025,4 @@ app_secret     验签秘钥
 点击立即预交
 ![image-20240204101759447](img/image-20240204101759447.png)
 ![image-20240204101823528](img/image-20240204101823528.png)
-
-```java
-    /**
-     * 将用户和对应的渠道绑定
-     * @param accountNo -- 用户唯一标志
-     * @param tenantId -- 租户ID
-     * @param opType -- 操作类型 0-绑定 1-解绑
-     */
-    public UserTenantAsso userAssoTenant(String accountNo,String tenantId,String opType){
-        opType = StringUtil.trimNull(opType,"0");
-        UserInfo userInfo = userInfoService.queryByAcctNo(accountNo,true);
-        TenantInfo tenantInfo = tenantInfoService.queryByTenantId(tenantId,true);
-        String key = userInfo.getAccountNo() + "-" + tenantInfo.getTenantId() + "-userAsso";
-        UserTenantAsso userTenantAsso = null;
-        try {
-            distributedRedisLock.tryLock(key);
-            userTenantAsso = userTenantAssoService.query(userInfo.getAccountNo(),tenantInfo.getTenantId());
-            if(userTenantAsso == null){
-                if("0".equals(opType)){
-                    userTenantAsso = new UserTenantAsso();
-                    userTenantAsso.setAssoTime(new Date());
-                    userTenantAsso.setCstatus(1);
-                    userTenantAsso.setUserToken(MD5.encode(userInfo.getAccountNo() + tenantInfo.getTenantId()));
-                    userTenantAsso.setTenantId(tenantInfo.getTenantId());
-                    userTenantAsso.setCreateTime(new Date());
-                    userTenantAsso.setAccountNo(userInfo.getAccountNo());
-                    userTenantAsso.setUpdateTime(new Date());
-                    userTenantAssoService.save(userTenantAsso);
-                }else{
-                    throw new BizException(AppBizExceptionEnum.PARAM_NULL_ERROR,"未查询到对应的关联记录，无法删除");
-                }
-            }else{
-                userTenantAsso.setAssoTime(new Date());
-                userTenantAsso.setUpdateTime(new Date());
-                userTenantAsso.setCstatus("0".equals(opType) ? 1 : 0);
-                if("1".equals(opType)){
-                    userTenantAsso.setCancelTime(new Date());
-                }
-                userTenantAssoService.updateById(userTenantAsso);
-            }
-        }catch (Exception ex){
-            throw new BizException(AppBizExceptionEnum.PARAM_NULL_ERROR,ex.getLocalizedMessage());
-        }finally {
-            distributedRedisLock.unlock(key);
-        }
-        return userTenantAsso;
-    }
-
-这段代码实现了将用户与对应渠道（或租户）进行绑定或解绑的功能。下面是代码的主要功能和关键点的解释：
-
-功能说明：
-
-该方法用于将用户和对应的渠道（租户）进行绑定或解绑。
-方法参数包括用户唯一标识（accountNo）、租户ID（tenantId）以及操作类型（opType），操作类型为0时表示绑定，为1时表示解绑。
-Lock（锁）的作用：
-
-在分布式环境中，多个服务实例可能同时访问共享资源，可能会导致数据不一致或冲突。为了避免这种情况，代码使用了分布式锁（distributedRedisLock）。
-在这段代码中，分布式锁的作用是确保在对用户和渠道进行绑定或解绑的操作期间，同一时刻只有一个线程能够执行，从而保证数据的一致性和完整性。
-Lock 的使用：
-
-在代码中，通过 distributedRedisLock.tryLock(key) 尝试获取锁，这会阻塞直到获取到锁为止。
-在 try 块中执行绑定或解绑操作。
-finally 块中释放锁，无论操作是否成功都要释放锁，确保锁的释放，避免死锁或资源泄漏。
-为什么使用锁：
-
-使用锁的主要原因是确保在多线程或者分布式环境中对共享资源的操作是线程安全的。
-在本例中，避免了多个线程同时对相同用户和渠道进行绑定或解绑操作，从而保证了数据的一致性和正确性。
-总之，通过使用分布式锁，该代码确保了对用户和渠道进行绑定或解绑操作时的线程安全性，避免了数据混乱或冲突的情况发生。
-```
 
