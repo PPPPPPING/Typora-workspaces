@@ -63,9 +63,9 @@ public class AtomicReferenceDemo {
 
 ## 总结
 
-CAS是比较并且交换,是unsafe类下面的原子操作,unsafe大多都是native修饰的,而native底层是直接操作内存的,所以CAS是原子操作
+CAS是比较并且交换,是unsafe类下面的原子操作,unsafe大多都是native修饰的,而native底层是直接操作内存的,所以CAS是原子操作,他能实现自旋,自旋是指不停的重试修改
 
-自旋是指不停的重试修改
+automatic原子类就是通过cas+volatile实现的
 
 会产生ABA问题,就是两个线程,A将a改成b之前,B已经将b改成a了,所以A还是a没有改成b,用AtomicStampedReference可以解决问题
 
@@ -138,6 +138,8 @@ volatile boolean flag = false
 # AQS
 
 ## 是什么
+
+抽象的队列同步器
 
 整体就是一个抽象的FIFO队列来完成资源获取线程的排队工作，并通过一个int类变量
 表示持有锁的状态
