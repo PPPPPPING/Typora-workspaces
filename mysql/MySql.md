@@ -98,8 +98,6 @@ ALTER TABLE TableName ADD INDEX IndexName(`字段名`(length));
 
 聚集索引
 
-![image-20240416080402958](https://github.com/PPPPPPING/Typora-workspaces@master/img/image-20240416080402958.png)
-
 ![image-20240416080617857](/Users/chenxi/Library/Application Support/typora-user-images/image-20240416080617857.png)
 
 # 事务
