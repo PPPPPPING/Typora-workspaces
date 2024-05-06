@@ -107,6 +107,6 @@ SPI 全称为 Service Provider Interface，是 Java 中一种服务发现机制�
 
 可以结合 zipkin 实现分布式服务追踪。
 
-说说核心的配置有哪些?
+# 说说核心的配置有哪些?
 
 ![image-20240505001347272](img/image-20240505001347272.png)

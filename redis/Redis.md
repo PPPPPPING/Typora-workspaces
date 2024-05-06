@@ -1,12 +1,18 @@
+[toc]
 
+# 脑裂
 
+min-replicas-to-write和min-replicas-max-lag
 
+min-replicas-to-write:设置了主库能进行数据同步的最少从库数量
 
-# 秒杀系统：
+min-replicas-max-lag:设置了主从库间进行数据复制时，从库给主库发送 ACK 消息的最大延迟(以秒为单位)
+
+# 秒杀系统
 
 稳定性怎么保证，怎么实现高可用
 
-1 隔离 系统和数据的隔离，秒杀的下单逻辑会和正常的下单流程隔离开，秒杀的库存和商品信息也要提前存储在Redis进行查询和扣减，活动结束之后再进行合并
+1 隔离系统和数据的隔离，秒杀的下单逻辑会和正常的下单流程隔离开，秒杀的库存和商品信息也要提前存储在Redis进行查询和扣减，活动结束之后再进行合并
 
 # 分布式锁对性能有什么影响
 
@@ -28,11 +34,13 @@
 
 # 订单服务有几个节点，还是集群
 
-# 缓存能在分布式的环境中共享吗 其实想问布隆过滤器能不能拦住好几台机器的流量，肯定不能，主节点对集中流量提供服务
+# 缓存能在分布式的环境中共享吗
 
-# 8 布隆过滤器的构造是怎么实现的，有没有用开源的方案
+其实想问布隆过滤器能不能拦住好几台机器的流量，肯定不能，主节点对集中流量提供服务
 
-# 9 布隆过滤器的数据结构，是数组，链表还是哈希表
+# 布隆过滤器的构造是怎么实现的，有没有用开源的方案
+
+# 布隆过滤器的数据结构，是数组，链表还是哈希表
 
 # bitmap存储到哪里，是缓存还是持久化 我回答缓存里，待确认
 
@@ -50,7 +58,7 @@
 
 # 如果做促销数据迁移的过程是什么样的
 
-# 下单接口的逻辑是怎么设计的 没见过代码
+# 下单接口的逻辑是怎么设计的
 
 # 调外部服务，用什么方式，如果是http方式肯定会存在网络问题
 
@@ -85,6 +93,192 @@
 # 分布式事务怎么保证的
 
 # 雪花算法
+
+- 最高位：0， 代表是 一个正整数；
+- 41位：存储毫秒级的时间戳，在java中可以使用 System.currentMillons()获取，并且保证了自增特性；
+- 10位：存储机房/机器/操作系统/容器/服务的ID；雪花算法内部的bit位数可以进行微调，比如5位机器id和5位服务id组合成10位。
+- 12位：存储一个自增的序列。
+
+![雪花算法](img/948c8ab89e1349f6bd5a67e00c08bf90.png)
+
+![img](img/bcd6347aca623c209c6e24dc3622b930.png)
+
+雪花算法是一种全局ID生成算法，其核心思想是将64位的long型ID分为四个部分
+
+时间戳、工作机器ID、数据中心ID、序列号
+
+雪花算法能够在分布式系统中保证ID的唯一性和有序性
+
+### 雪花算法优点
+
+> 不需要搭建服务集群，代码逻辑非常简单，同一毫秒内，订单ID的序列号自增。同步锁只作用于本机，机器之间互不影响，每毫秒可以生成4百万个订单ID
+
+对比Mysql自增主键：
+
+> 一般雪花算法用于生成订单ID，相比于 Mysql 自增主键来说，Mysql 自增ID是不是很容易看出你的销量，做个差值计算就好了
+
+对比UUID
+
+> UUID是无序的，订单ID都加索引，在你插入数据的时候，维护B+树很好性能，需要频繁的调整叶子结点的数据，还会导致页分裂。简而言之就是性能不高，而雪花算法性能高低延迟
+
+```java
+import org.springframework.beans.factory.annotation.Value;
+import javax.annotation.PostConstruct;
+ 
+/**
+ * 雪花算法生成全局唯一的ID
+ * 64个bit位的long类型的值
+ * 第一位：占 1 个bit位，就是0
+ * 第二位：占 41 个bit位， 代表时间戳
+ * 第三位：占 5 个bit位， 代表机器id （这里将 10 bit 位 做了调整）
+ * 第四位：占 5 个bit位，服务id
+ * 第五位：占 12 个bit位， 自增序列
+ */
+public class SnowFlakeUtil {
+ 
+    /**
+     * 41 个bit位存储时间戳， 从0开始计算， 最多可以存储 69.7年。
+     * 如果从默认使用， 从1970年到现在，最多可以用到2040年。
+     * 按照从 2023-12-28号开始计算，存储41个bit位， 最多可以使用到2093年
+     */
+    private long timeStart = 1703692800000L;
+ 
+    /**
+     * 机器id， 通过yml配置的方式声明
+     */
+    @Value("${snowflake.machineId:0}")
+    private long machineId = 0;
+ 
+    /**
+     * 服务id， 通过yml配置的方式声明
+     */
+    @Value("${snowflake.serviceId:0}")
+    private long serviceId = 0;
+ 
+    /**
+     * 自增序列
+     */
+    private long sequence;
+ 
+    // 需要做机器id和服务id的兼容性校验， 不能超过了5位的最大值
+ 
+    /**
+     * 机器id占用的bit位数
+     */
+    private long machineIdBits = 5L;
+ 
+    /**
+     * 服务id占用的bit位数
+     */
+    private long serviceIdBits = 5L;
+ 
+    /**
+     * 序列占用的bit位数
+     */
+    private long sequenceBits = 12L;
+ 
+    /**
+     * 计算出机器id的最大值 -1 往左移 machineIdBits 位， 再做亦或运算
+     */
+    private long maxMachineId = -1 ^ (-1 << machineIdBits); 
+  	// -1 往左移 machineIdBits 位， 再做亦或运算
+    // 11111111 11111111 11111111 11111111 11111111
+    // 11111111 11111111 11111111 11111111 11100000
+    // 00000000 00000000 00000000 00000000 00011111
+ 
+    /**
+     * 计算出服务id的最大值
+     */
+    private long maxServiceId = -1 ^ (-1 << serviceIdBits);
+ 
+    /**
+     * 校验 机器id 和 服务id 是否超过最大范围值
+     */
+    @PostConstruct
+    public void init() {
+        if (machineId > maxMachineId || serviceId > maxServiceId) {
+            System.out.println("机器id或服务id超过最大范围值");
+        }
+    }
+ 
+    /**
+     * 服务id需要位移的位数， 即从右侧开始， 将数字左移 sequenceBits 到固定的位置
+     */
+    private long serviceIdShift = sequenceBits;
+ 
+    /**
+     * 机器id需要位移的位数， 即从右侧开始， 将数字左移 sequenceBits + serviceIdBits  到固定的位置
+     */
+    private long machineIdShift = sequenceBits + serviceIdBits;
+ 
+    /**
+     * 时间戳需要位移的位数, 即从右侧开始， 将数字左移 sequenceBits + serviceIdBits + machineIdBits 到固定的位置
+     */
+    private long timestampShift = sequenceBits + serviceIdBits + machineIdBits;
+ 
+    /**
+     * 序列的最大值 -1 往左移 sequenceBits 位， 再做亦或运算
+     */
+    private long maxSequenceId = -1 ^ (-1 << sequenceBits);
+ 
+    /**
+     * 记录最近一次获取id的时间
+     */
+    private long lastTimestamp = -1;
+ 
+    /**
+     * 拿到当前系统时间的毫秒值
+     *
+     * @return
+     */
+    private long timeGen() {
+        return System.currentTimeMillis();
+    }
+ 
+    /**
+     * 生成全局唯一id
+     * 因为有很多服务调用这个方法， 所以需要加sychronized锁
+     */
+    public synchronized long nextId() {
+        //1. 拿到当前系统时间的毫秒值
+        long timestamp = timeGen();
+        // 避免时间回拨造成出现重复的id
+        if (timestamp < lastTimestamp) {
+            // 说明出现了时间回拨
+            System.out.println("当前服务出现时间回拨");
+        }
+ 
+            //2. 41个bit的时间知道了存什么了， 但是序列也需要计算一下。 如果是同一毫秒，序列就需要 还原 或者 ++
+            // 判读当前生成的id的时间 和 上一次生成的时间
+        if (timestamp == lastTimestamp) {
+            // 同一毫秒值生成id
+            sequence = (sequence + 1) & maxSequenceId; // 加1最大值进行与运算， 结果是如果超过了maxSequenceId则为0， 小于则不变
+            if (sequence == 0) {
+                // 进到这个if，说明已经超出了sequence序列的最大取值范围
+                // 需要等到下一个毫秒值再回来生成具体的值
+                timestamp = timeGen();
+                // 写 <= 而不 写 == 是为了避免出现时间回拨的问题
+                while (timestamp <= lastTimestamp) {
+                    // 时间还没动
+                    timestamp = timeGen();
+                }
+            }
+        } else {
+            // 另一个时间点生成id
+            sequence = 0;
+        }
+        //3. 重新给 lastTimestamp 赋值
+        lastTimestamp = timestamp;
+ 
+        //4. 计算id，将几位值拼接起来， 41bit位的时间， 5位的机器， 5位的服务， 12位的序列
+        return ((timestamp - timeStart) << timestampShift) | // 相减的差值 往左移  timestampShift
+                (machineId << machineIdShift) |  // machineId 往左移  machineIdShift
+                (serviceId << serviceIdShift) |  // serviceId 往左移  serviceIdShift
+                sequence &
+                Long.MAX_VALUE;
+    }
+}
+```
 
 # 如果我要求ID具有有序性，10号机器先生成，1号机器后生成，怎么保证有序
 
@@ -126,7 +320,7 @@
 
 # 各种缓存高并发的使用场景 
 
-Redis缓存击穿、缓存雪崩、缓存穿透 
+Redis缓存击穿、缓存雪崩、缓存穿透
 
 ## 缓存击穿 
 
@@ -306,7 +500,7 @@ RDB和AOF混合模式
 
 ![image-20240402225209302](img/image-20240402225209302.png)
 
-# Redis与数据库一致性
+# ==Redis与数据库一致性==
 
 canal  监听binlog
 
@@ -437,6 +631,8 @@ new SessionCallback	![image-20240410014747916](img/image-20240410014747916.png)
 setnx,设置了值,别的就不能设置了,所以设置了值就相当于获取锁了
 
 ![image-20240410015628788](img/image-20240410015628788.png)
+
+redisTemplate.opsForValue () . setIfAbsent
 
 ![image-20240410020917148](img/image-20240410020917148.png)
 

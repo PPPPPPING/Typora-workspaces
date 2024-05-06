@@ -20,7 +20,7 @@
 
 ## 二级缓存底层原理
 
-使用 CachingExecutor 装饰了 Executor，它是一个全局缓存，会被多个 SqlSession 共享。先通过 CachingExecutor 进行二级缓存的查询，查不到再进入一级缓存的查询。
+使用 CachingExecutor 装饰了 Executor，它是一个全局缓存，会被多个 SqlSession 共享。先通过 CachingExecutor 进行二级缓存的查询，查不到再进入一级缓存的查询。只要有任何一个 SqlSession 拿到了数据就会放入到二级缓存里面，其他的 SqlSession 就可以从二级缓存加载数据
 
 # #{} 和 ${}的区别
 

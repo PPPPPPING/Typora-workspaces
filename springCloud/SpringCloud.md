@@ -52,6 +52,10 @@
 
 # CAP
 
+- 一致性（Consistency）：所有节点在同一时间看到的数据是一致的。
+- 可用性（Availability）：系统能够对外提供服务并保证响应时间。
+- 分区容错性（Partition tolerance）：系统在遇到网络分区故障时仍然能够正常工作。
+
 # Nginx
 
 ## nginx会用来干嘛

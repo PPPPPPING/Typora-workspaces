@@ -75,7 +75,8 @@ CAS是比较并且交换,是unsafe类下面的原子操作,unsafe大多都是nat
 
 - 循环时间过长开销过大
 
-- 会产生ABA问题,就是两个线程,A将a改成b之前,B已经将b改成a了,所以A还是a没有改成b,用AtomicStampedReference可以解决问题
+- 会产生ABA问题,就是两个线程,A将a改成b之前,B已经将b改成a了,所以A还是a没有改成b
+  用AtomicStampedReference可以解决问题，版本号时间戳，比较加版本号一起上
 
 # volatile
 
@@ -274,11 +275,19 @@ Monitor是由ObjectMonitor3实现，而ObjectMonitor是由C++的ObjectMonitor..h
 
 偏向锁,单线程竞争,一段同步代码被一个线程多次访问,后续访问就自动获取锁就叫偏向锁
 
-轻量锁,
+轻量锁,CAS自旋排队获取锁
 
 ![image-20240430022933336](img/image-20240430022933336.png)
 
+重量锁
+
+自旋到达一定的次数没有成功就变成重量级锁
+
+![img](img/1681455335764-3bb5bb5f-d014-4b25-9755-e0ca2c9aa809.png)
+
 ![image-20240430023438607](img/image-20240430023438607.png)
+
+![20200602120540100.jpg](img/1681459024640-cadca197-5d19-433d-b6d8-abc8965ce494.jpeg)
 
 
 
